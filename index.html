@@ -1,24 +1,44 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+
     <title>My Notes App</title>
+
     <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
-<h1>My Notes App</h1>
+    <div class="container">
 
-<textarea id="noteInput" placeholder="Write your note..."></textarea>
+        <h1>📝 My Notes</h1>
 
-<br>
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search notes..."
+            onkeyup="displayNotes()"
+        >
 
-<button onclick="saveNote()">Save Note</button>
+        <textarea
+            id="noteInput"
+            placeholder="Write your note..."
+        ></textarea>
 
-<h2>Saved Notes</h2>
+        <button onclick="saveNote()">
+            Save Note
+        </button>
 
-<div id="notesContainer"></div>
+        <h2>Saved Notes</h2>
 
-<script src="script.js"></script>
+        <div id="notesContainer"></div>
+
+    </div>
+
+    <script src="script.js"></script>
 
 </body>
+
 </html>

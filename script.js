@@ -1,9 +1,12 @@
 function saveNote() {
 
     const noteInput = document.getElementById("noteInput");
-    const noteText = noteInput.value;
+    const noteText = noteInput.value.trim();
 
-    if (noteText === "") return;
+    if (noteText === "") {
+        alert("Please enter a note!");
+        return;
+    }
 
     const notes =
         JSON.parse(localStorage.getItem("notes")) || [];
@@ -40,10 +43,14 @@ function editNote(index) {
     const notes =
         JSON.parse(localStorage.getItem("notes")) || [];
 
-    const updatedNote =
-        prompt("Edit your note:", notes[index]);
+    const updatedNote = prompt(
+        "Edit your note:",
+        notes[index]
+    );
 
-    if (updatedNote === null) return;
+    if (updatedNote === null) {
+        return;
+    }
 
     notes[index] = updatedNote;
 
@@ -63,9 +70,24 @@ function displayNotes() {
     const container =
         document.getElementById("notesContainer");
 
+    const searchInput =
+        document.getElementById("searchInput");
+
+    let searchText = "";
+
+    if (searchInput) {
+        searchText = searchInput.value.toLowerCase();
+    }
+
     container.innerHTML = "";
 
     notes.forEach((note, index) => {
+
+        if (
+            !note.toLowerCase().includes(searchText)
+        ) {
+            return;
+        }
 
         const div =
             document.createElement("div");
