@@ -11,7 +11,10 @@ function saveNote() {
     const notes =
         JSON.parse(localStorage.getItem("notes")) || [];
 
-    notes.push(noteText);
+    notes.push({
+        text: noteText,
+        date: new Date().toLocaleString()
+    });
 
     localStorage.setItem(
         "notes",
@@ -43,16 +46,16 @@ function editNote(index) {
     const notes =
         JSON.parse(localStorage.getItem("notes")) || [];
 
-    const updatedNote = prompt(
+    const updated = prompt(
         "Edit your note:",
-        notes[index]
+        notes[index].text
     );
 
-    if (updatedNote === null) {
+    if (updated === null) {
         return;
     }
 
-    notes[index] = updatedNote;
+    notes[index].text = updated;
 
     localStorage.setItem(
         "notes",
@@ -70,45 +73,40 @@ function displayNotes() {
     const container =
         document.getElementById("notesContainer");
 
-    const searchInput =
-        document.getElementById("searchInput");
-
-    let searchText = "";
-
-    if (searchInput) {
-        searchText = searchInput.value.toLowerCase();
-    }
+    const search =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase();
 
     container.innerHTML = "";
 
     notes.forEach((note, index) => {
 
-        if (
-            !note.toLowerCase().includes(searchText)
-        ) {
+        if (typeof note === "string") {
+            note = {
+                text: note,
+                date: ""
+            };
+        }
+
+        if (!note.text.toLowerCase().includes(search)) {
             return;
         }
 
-        const div =
-            document.createElement("div");
-
+        const div = document.createElement("div");
         div.className = "note";
 
         div.innerHTML = `
-            <p>${note}</p>
-
-            <button onclick="editNote(${index})">
-                ✏️ Edit
-            </button>
-
-            <button onclick="deleteNote(${index})">
-                🗑️ Delete
-            </button>
+            <h3>${note.text}</h3>
+            <small>🕒 ${note.date}</small>
+            <br><br>
+            <button onclick="editNote(${index})">✏️ Edit</button>
+            <button onclick="deleteNote(${index})">🗑️ Delete</button>
         `;
 
         container.appendChild(div);
-
     });
+
 }
 
 displayNotes();
