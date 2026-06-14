@@ -17,7 +17,7 @@
 
     <div class="container">
 
-        <h1>📝 My Notes</h1>
+        <h1>📝 My Smart Notes</h1>
 
         <input
             type="text"
@@ -35,7 +35,13 @@
             Save Note
         </button>
 
-        <h2>Saved Notes</h2>
+        <h2 id="notesTitle">
+    Saved Notes (0)
+</h2>
+
+<button onclick="deleteAllNotes()">
+🗑 Delete All Notes
+</button>
 
         <div id="notesContainer"></div>
 

@@ -1,10 +1,10 @@
 body{
 
-    background:#eef2f7;
+    margin:0;
 
     font-family:Arial,sans-serif;
 
-    margin:0;
+    background:linear-gradient(135deg,#74ebd5,#ACB6E5);
 
 }
 
@@ -18,15 +18,25 @@ body{
 
     padding:30px;
 
-    border-radius:15px;
+    border-radius:20px;
 
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
 
 }
 
 h1{
 
     text-align:center;
+
+    color:#2563eb;
+
+    margin-bottom:25px;
+
+}
+
+h2{
+
+    color:#444;
 
 }
 
@@ -37,9 +47,9 @@ textarea{
 
     padding:12px;
 
-    margin-top:10px;
+    margin-top:12px;
 
-    border-radius:8px;
+    border-radius:10px;
 
     border:1px solid #ccc;
 
@@ -53,13 +63,15 @@ textarea{
 
     height:120px;
 
+    resize:none;
+
 }
 
 button{
 
-    margin-top:10px;
+    margin-top:12px;
 
-    margin-right:10px;
+    margin-right:8px;
 
     padding:10px 18px;
 
@@ -73,9 +85,13 @@ button{
 
     cursor:pointer;
 
+    transition:0.3s;
+
 }
 
 button:hover{
+
+    transform:scale(1.05);
 
     background:#1d4ed8;
 
@@ -85,21 +101,23 @@ button:hover{
 
     background:#f8fafc;
 
-    margin-top:15px;
+    margin-top:18px;
 
-    padding:15px;
+    padding:18px;
 
-    border-radius:10px;
+    border-radius:12px;
 
-    border-left:5px solid #2563eb;
+    border-left:6px solid #2563eb;
 
-    transition:.3s;
+    transition:0.3s;
+
+    box-shadow:0 3px 8px rgba(0,0,0,.1);
 
 }
 
 .note:hover{
 
-    transform:scale(1.02);
+    transform:translateY(-4px);
 
 }
 
