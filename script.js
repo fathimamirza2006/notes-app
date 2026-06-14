@@ -1,181 +1,82 @@
+let notes = JSON.parse(localStorage.getItem("notes")) || [];
+
 function saveNote() {
 
-    const noteInput = document.getElementById("noteInput");
-    const noteText = noteInput.value.trim();
-
-    if (noteText === "") {
-        alert("Please enter a note!");
-        return;
-    }
-
-    const notes =
-        JSON.parse(localStorage.getItem("notes")) || [];
+    const text = document.getElementById("noteInput").value.trim();
+    if (!text) return;
 
     notes.push({
-        text: noteText,
+        text,
         date: new Date().toLocaleString(),
         pinned: false
     });
 
-    localStorage.setItem(
-        "notes",
-        JSON.stringify(notes)
-    );
-
-    noteInput.value = "";
+    localStorage.setItem("notes", JSON.stringify(notes));
+    document.getElementById("noteInput").value = "";
 
     displayNotes();
 }
 
 function deleteNote(index) {
-
-    const notes =
-        JSON.parse(localStorage.getItem("notes")) || [];
-
     notes.splice(index, 1);
-
-    localStorage.setItem(
-        "notes",
-        JSON.stringify(notes)
-    );
-
-    displayNotes();
-}
-
-function deleteAllNotes() {
-
-    const answer = confirm("Delete all notes?");
-
-    if (!answer) {
-        return;
-    }
-
-    localStorage.removeItem("notes");
-
+    localStorage.setItem("notes", JSON.stringify(notes));
     displayNotes();
 }
 
 function editNote(index) {
-
-    const notes =
-        JSON.parse(localStorage.getItem("notes")) || [];
-
-    const updated = prompt(
-        "Edit your note:",
-        notes[index].text
-    );
-
-    if (updated === null) {
-        return;
-    }
+    let updated = prompt("Edit note:", notes[index].text);
+    if (updated === null) return;
 
     notes[index].text = updated;
-
-    localStorage.setItem(
-        "notes",
-        JSON.stringify(notes)
-    );
-
+    localStorage.setItem("notes", JSON.stringify(notes));
     displayNotes();
 }
 
 function pinNote(index) {
-
-    const notes =
-        JSON.parse(localStorage.getItem("notes")) || [];
-
     notes[index].pinned = !notes[index].pinned;
-
-    localStorage.setItem(
-        "notes",
-        JSON.stringify(notes)
-    );
-
+    localStorage.setItem("notes", JSON.stringify(notes));
     displayNotes();
+}
+
+function toggleTheme() {
+    document.body.classList.toggle("dark");
 }
 
 function displayNotes() {
 
-    const notes =
-        JSON.parse(localStorage.getItem("notes")) || [];
+    const search = document.getElementById("searchInput").value.toLowerCase();
+    const container = document.getElementById("notesContainer");
 
-    // Sort pinned notes first
-    notes.sort((a, b) => {
-
-        if (typeof a === "string" || typeof b === "string") {
-            return 0;
-        }
-
-        return Number(b.pinned) - Number(a.pinned);
-
-    });
-
-    const container =
-        document.getElementById("notesContainer");
-
-    const search =
-        document.getElementById("searchInput")
-        .value
-        .toLowerCase();
-
-    const title =
-        document.getElementById("notesTitle");
-
-    if (title) {
-        title.textContent =
-            `Saved Notes (${notes.length})`;
-    }
+    notes.sort((a, b) => b.pinned - a.pinned);
 
     container.innerHTML = "";
 
+    document.getElementById("notesTitle").innerText =
+        `Notes (${notes.length})`;
+
     notes.forEach((note, index) => {
 
-        // Support old notes stored as strings
-        if (typeof note === "string") {
-            note = {
-                text: note,
-                date: "",
-                pinned: false
-            };
-        }
+        if (!note.text.toLowerCase().includes(search)) return;
 
-        if (
-            !note.text
-                .toLowerCase()
-                .includes(search)
-        ) {
-            return;
-        }
-
-        const div =
-            document.createElement("div");
-
+        const div = document.createElement("div");
         div.className = "note";
 
         div.innerHTML = `
-            <h3>${note.pinned ? "📌 " : ""}${note.text}</h3>
-
-            <small>🕒 ${note.date}</small>
-
+            <b>${note.pinned ? "📌 " : ""}${note.text}</b>
+            <br>
+            <small>${note.date}</small>
             <br><br>
 
             <button onclick="pinNote(${index})">
-                ${note.pinned ? "📍 Unpin" : "📌 Pin"}
+                ${note.pinned ? "Unpin" : "Pin"}
             </button>
 
-            <button onclick="editNote(${index})">
-                ✏️ Edit
-            </button>
-
-            <button onclick="deleteNote(${index})">
-                🗑️ Delete
-            </button>
+            <button onclick="editNote(${index})">Edit</button>
+            <button onclick="deleteNote(${index})">Delete</button>
         `;
 
         container.appendChild(div);
-
     });
-
 }
 
 displayNotes();

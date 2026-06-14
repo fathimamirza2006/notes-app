@@ -2,53 +2,39 @@
 <html lang="en">
 
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>My Notes App</title>
-
-    <link rel="stylesheet" href="style.css">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Notes App</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="container">
+<div class="app">
 
-        <h1>📝 My Smart Notes</h1>
-
-        <input
-            type="text"
-            id="searchInput"
-            placeholder="🔍 Search notes..."
-            onkeyup="displayNotes()"
-        >
-
-        <textarea
-            id="noteInput"
-            placeholder="Write your note here..."
-        ></textarea>
-
-        <button onclick="saveNote()">
-            Save Note
-        </button>
-
-        <h2 id="notesTitle">
-    Saved Notes (0)
-</h2>
-
-<button onclick="deleteAllNotes()">
-🗑 Delete All Notes
-</button>
-
-        <div id="notesContainer"></div>
-
+    <div class="topbar">
+        <h1>🧠 My Notes</h1>
+        <button onclick="toggleTheme()">🌙</button>
     </div>
 
-    <script src="script.js"></script>
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search notes..."
+        onkeyup="displayNotes()"
+    >
+
+    <textarea id="noteInput" placeholder="Write something amazing..."></textarea>
+
+    <button class="addBtn" onclick="saveNote()">+ Add Note</button>
+
+    <h2 id="notesTitle">Notes</h2>
+
+    <div id="notesContainer"></div>
+
+</div>
+
+<script src="script.js"></script>
 
 </body>
-
 </html>
